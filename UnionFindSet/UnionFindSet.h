@@ -3,6 +3,7 @@
 #include<vector>
 using namespace std;
 
+
 // 0   1   2   3   4   5    6
 // -1  -1  -1  -1  -1
 class UnionFindSet
@@ -12,14 +13,14 @@ public:
 	{
 		s.resize(size, -1);
 	}
-	size_t FindIdx(int x)//ÕÒ¸ÃÎ»ÖÃµÄ¸ù½ÚµãµÄÏÂ±ê
+	size_t FindIdx(int x)//æ‰¾è¯¥ä½ç½®çš„æ ¹èŠ‚ç‚¹çš„ä¸‹æ ‡
 	{
 		int root = x;
 		while (s[root] >= 0)
 			root = s[root];
 		return root;
 	}
-	void Union(int x1, int x2)//ºÏ²¢Á½¸ö
+	void Union(int x1, int x2)//åˆå¹¶ä¸¤ä¸ª
 	{
 		int root1 = FindIdx(x1);
 		int root2 = FindIdx(x2);
@@ -29,11 +30,11 @@ public:
 			s[root2] = root1;
 		}
 	}
-	bool IsSameSet(int x1, int x2)//ÅĞ¶ÏÁ½¸ö¼¯ºÏÊÇ·ñÏàµÈ
+	bool IsSameSet(int x1, int x2)//åˆ¤æ–­ä¸¤ä¸ªé›†åˆæ˜¯å¦ç›¸ç­‰
 	{
 		return FindIdx(x1) == FindIdx(x2);
 	}
-	size_t SetSize()//ÇóÓĞ¼¸¸ö¼¯ºÏ 0 ²»ÊÇÒ»¸ö¼¯ºÏ
+	size_t SetSize()//æ±‚æœ‰å‡ ä¸ªé›†åˆ 0 ä¸æ˜¯ä¸€ä¸ªé›†åˆ
 	{
 		size_t count = 0;
 		for (size_t i = 0; i < s.size(); ++i)
