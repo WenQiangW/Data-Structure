@@ -7,12 +7,13 @@
 #include <algorithm>
 #include "UnionFindSet.h"
 using namespace std;
-//ÁÚ½Ó±í
+//é‚»æ¥è¡¨
+
 
 template<class W>
 struct LinkEdge
 {
-	W _edge;//È¨Öµ
+	W _edge;//æƒå€¼
 	size_t _srcIndex;
 	size_t _desIndex;
 	struct LinkEdge<W>* _pNext;
@@ -41,8 +42,8 @@ public:
 			_vex[i] = pVex[i];
 	}
 	
-	//Í·²å·¨
-	void _AddEdge(int srcIdx, int desIdx,const  W& weight)//ÎªÁË·ÀÖ¹´úÂëÖØ¸´
+	//å¤´æ’æ³•
+	void _AddEdge(int srcIdx, int desIdx,const  W& weight)//ä¸ºäº†é˜²æ­¢ä»£ç é‡å¤
 	{
 		LinkEdge<W>* pEdge = new LinkEdge<W>(srcIdx, desIdx, weight);
 		pEdge->_pNext = _LinkTable[srcIdx];
@@ -55,17 +56,17 @@ public:
 		int desIdx = GetIndexOfVertex(v2);
 		assert(srcIdx != desIdx);
 
-		//ÅĞ¶ÏÊÇ·ñÎªÓĞÏòÍ¼:ÓĞÏòÍ¼²åÈëÈ¨Öµ£¬Ö»²åÈëÒ»´Î
+		//åˆ¤æ–­æ˜¯å¦ä¸ºæœ‰å‘å›¾:æœ‰å‘å›¾æ’å…¥æƒå€¼ï¼Œåªæ’å…¥ä¸€æ¬¡
 		_AddEdge(srcIdx, desIdx, weight);
 		if (!_IsDirected)
 			_AddEdge(desIdx, srcIdx, weight);
 	}
-	//»ñÈ¡Ä³¸ö½ÚµãµÄ¶ÈÊı£ºÓĞÏòÍ¼³ö¶ÈºÍÈë¶È
+	//è·å–æŸä¸ªèŠ‚ç‚¹çš„åº¦æ•°ï¼šæœ‰å‘å›¾å‡ºåº¦å’Œå…¥åº¦
 	int GetDev(const V& v)
 	{
-		//ÏÈÇó³ö¶È(ÓĞÏòÍ¼ºÍÎŞÏòÍ¼ ¶¼ÒªÇó)
+		//å…ˆæ±‚å‡ºåº¦(æœ‰å‘å›¾å’Œæ— å‘å›¾ éƒ½è¦æ±‚)
 		int VertexIdx = GetIndexOfVertex(v);
-		//±éÀúÁ´±í
+		//éå†é“¾è¡¨
 		int InCount = 0;
 		LinkEdge<W> *pEdge = _LinkTable[VertexIdx];
 		while (pEdge)
@@ -73,7 +74,7 @@ public:
 			++InCount;
 			pEdge = pEdge->_pNext;
 		}
-		//Çó³ö¶È
+		//æ±‚å‡ºåº¦
 		int OutCount = 0;
 		if (_IsDirected)
 		{
@@ -96,7 +97,7 @@ public:
 
 	void Print()
 	{
-		cout << " Í¼µÄ¹¹³É£º" << endl;
+		cout << " å›¾çš„æ„æˆï¼š" << endl;
 		for (size_t i = 0; i < _LinkTable.size(); ++i)
 		{
 			LinkEdge<W>* pCur = _LinkTable[i];
@@ -111,14 +112,14 @@ public:
 		cout << endl;
 	}
 
-	//¹ã¶ÈÓÅÏÈ±éÀúÍ¼£º¶ÓÁĞ
+	//å¹¿åº¦ä¼˜å…ˆéå†å›¾ï¼šé˜Ÿåˆ—
 	void BFS(const V& v)
 	{
-		cout << "¹ã¶ÈÓÅÏÈ±éÀú£º" << endl;
+		cout << "å¹¿åº¦ä¼˜å…ˆéå†ï¼š" << endl;
 		vector<bool> visited(_vex.size(), false);
 		_BFS(v, visited);
 
-		//·ÇÁ¬Í¨µÄ·ÃÎÊ
+		//éè¿é€šçš„è®¿é—®
 		for (size_t i = 0; i < _vex.size(); ++i)
 		{
 			if (!visited[i])
@@ -127,15 +128,15 @@ public:
 		cout << "NULL" << endl;
 	}
 
-	//Éî¶ÈÓÅÏÈ±éÀú£º
+	//æ·±åº¦ä¼˜å…ˆéå†ï¼š
 	void DFS(const V& v)
 	{
-		cout << "Éî¶ÈÓÅÏÈ±éÀú£º" << endl;
+		cout << "æ·±åº¦ä¼˜å…ˆéå†ï¼š" << endl;
 		vector<bool> visited(_vex.size(), false);
 		int idx = GetIndexOfVertex(v);
 		_DFS(idx, visited);
 
-		//·ÇÁ¬Í¨µÄ·ÃÎÊ
+		//éè¿é€šçš„è®¿é—®
 		for (size_t i = 0; i < _vex.size(); ++i)
 		{
 			if (!visited[i])
@@ -152,25 +153,25 @@ public:
 		}
 	};
 
-	//ÎŞÏòÍ¼µÄ×îĞ¡Éú³ÉÊ÷
+	//æ— å‘å›¾çš„æœ€å°ç”Ÿæˆæ ‘
 	pair<GraphLink<V, W>, bool> GetMinTree()
 	{
 
-		//1 ½«ËùÓĞµÄ±ß·ÅÔÚvectorÖĞ£¬¹ıÂËµôÖØ¸´µÄ±ß
+		//1 å°†æ‰€æœ‰çš„è¾¹æ”¾åœ¨vectorä¸­ï¼Œè¿‡æ»¤æ‰é‡å¤çš„è¾¹
 		vector<LinkEdge<W> *> edge;
 		for (size_t i = 0; i < _LinkTable.size(); ++i)
 		{
 			LinkEdge<W> * pCur = _LinkTable[i];
 			while (pCur)
 			{
-				if (pCur->_srcIndex < pCur->_desIndex)//¹ıÂËµôÖØ¸´µÄ±ß
+				if (pCur->_srcIndex < pCur->_desIndex)//è¿‡æ»¤æ‰é‡å¤çš„è¾¹
 					edge.push_back(pCur);
 				pCur = pCur->_pNext;
 			}
 		}
-		//2 ½«vector ÅÅĞò
+		//2 å°†vector æ’åº
 		sort(edge.begin(), edge.end(), Compare());
-		//3 ´ÓvectorÖĞÈ¡³ö×îĞ¡Öµ£¬Ìí¼Óµ½Í¼ÖĞ
+		//3 ä»vectorä¸­å–å‡ºæœ€å°å€¼ï¼Œæ·»åŠ åˆ°å›¾ä¸­
 		GraphLink<V, W> g;
 		g._vex.resize(_vex.size());
 		for (size_t idx = 0; idx < _vex.size(); ++idx)
@@ -178,9 +179,9 @@ public:
 		g._LinkTable.resize(_LinkTable.size(), NULL);
 		g._IsDirected = false;
 
-		//²¢²é¼¯£¬¼ì²âÊÇ·ñ¹¹³ÉÁË»·
+		//å¹¶æŸ¥é›†ï¼Œæ£€æµ‹æ˜¯å¦æ„æˆäº†ç¯
 		UnionFindSet un(_vex.size());
-		int count = 0;//Í³¼Æ¼ÓÈëµÄ±ßÊıÁ¿
+		int count = 0;//ç»Ÿè®¡åŠ å…¥çš„è¾¹æ•°é‡
 		for (size_t j = 0; j < edge.size(); ++j)
 		{
 			LinkEdge<W>* pEdge = edge[j];
@@ -206,7 +207,7 @@ public:
 			return Left->_edge >  Right->_edge;
 		}
 	};
-	//×îĞ¡Éú³ÉÊ÷primeËã·¨
+	//æœ€å°ç”Ÿæˆæ ‘primeç®—æ³•
 	pair<GraphLink<V, W>, bool> Prime(const V& vertex)
 	{
 		GraphLink<V, W> g;
@@ -216,8 +217,8 @@ public:
 		g._IsDirected = false;
 		g._LinkTable.resize(_vex.size()-1, NULL);
 
-		//¸øÒ»¸öÆğÊ¼¶¥µã£¬½«¶¥µãÎªÆğµãµÄ±ß·Åµ½×îĞ¡¶ÑÖĞ,Ã¿´Î´Ó×îĞ¡¶ÑÖĞÈ¡¶Ñ¶¥¼Óµ½Í¼ÖĞ(ÅĞ¶ÏÊÇ·ñÒÑ¾­¼ÓÈë)
-		vector<bool> flag(_vex.size(), false);//±ê¼Ç¶¥µãÊÇ·ñÒÑ¾­¼ÓÈëÍ¼ÖĞ 
+		//ç»™ä¸€ä¸ªèµ·å§‹é¡¶ç‚¹ï¼Œå°†é¡¶ç‚¹ä¸ºèµ·ç‚¹çš„è¾¹æ”¾åˆ°æœ€å°å †ä¸­,æ¯æ¬¡ä»æœ€å°å †ä¸­å–å †é¡¶åŠ åˆ°å›¾ä¸­(åˆ¤æ–­æ˜¯å¦å·²ç»åŠ å…¥)
+		vector<bool> flag(_vex.size(), false);//æ ‡è®°é¡¶ç‚¹æ˜¯å¦å·²ç»åŠ å…¥å›¾ä¸­ 
 		vector<LinkEdge<W> *> vEdge;
 		int index = GetIndexOfVertex(vertex);
 		LinkEdge<W> *pCur = _LinkTable[index];
@@ -228,10 +229,10 @@ public:
 		}
 		make_heap(vEdge.begin(), vEdge.end(), Biger());
 		
-		int count = 0;//Í³¼Æ¼ÓÈë±ßµÄÊıÁ¿
+		int count = 0;//ç»Ÿè®¡åŠ å…¥è¾¹çš„æ•°é‡
 		while (true)
 		{
-			//´Ó×îĞ¡¶ÑÖĞÈ¡³ö
+			//ä»æœ€å°å †ä¸­å–å‡º
 			pCur = vEdge[0];
 			pop_heap(vEdge.begin(), vEdge.end(), Biger());
 			vEdge.pop_back();
@@ -302,7 +303,7 @@ private:
 			}
 		}
 	}
-	//»ñÈ¡¶¥µãµÄÏÂ±ê
+	//è·å–é¡¶ç‚¹çš„ä¸‹æ ‡
 	size_t GetIndexOfVertex(const V& v)
 	{
 		for (size_t i = 0; i < _vex.size(); ++i)
