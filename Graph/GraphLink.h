@@ -10,6 +10,7 @@ using namespace std;
 //邻接表
 
 
+
 template<class W>
 struct LinkEdge
 {
