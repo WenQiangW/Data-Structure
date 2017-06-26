@@ -1,10 +1,11 @@
 
-//ÊµÏÖµü´úÆ÷
+//å®ç°è¿­ä»£å™¨
 #pragma once
 #include<iostream>
 #include<vector>
 #include<string>
 #include"common.h"
+
 
 using namespace std;
 
@@ -23,8 +24,8 @@ template<class K, class V, class _HashFun = HashFunDef<K>>
 class HashTableBucket;
 
 
-//µü´úÆ÷ÓĞÁ½¸ö³ÉÔ±±äÁ¿:µü´úÆ÷Ö¸Ïòµ±Ç°µÄ½Úµã£¬HashTableBucket
-template<class K, class V, class Ref, class Ptr, class _HashFun> //µÚÈı¸ö²ÎÊıÎªÒıÓÃ£¬µÚËÄ¸ö²ÎÊıÎªÖ¸Õë
+//è¿­ä»£å™¨æœ‰ä¸¤ä¸ªæˆå‘˜å˜é‡:è¿­ä»£å™¨æŒ‡å‘å½“å‰çš„èŠ‚ç‚¹ï¼ŒHashTableBucket
+template<class K, class V, class Ref, class Ptr, class _HashFun> //ç¬¬ä¸‰ä¸ªå‚æ•°ä¸ºå¼•ç”¨ï¼Œç¬¬å››ä¸ªå‚æ•°ä¸ºæŒ‡é’ˆ
 struct _HashTableIterator
 {
 	typedef HashTableNode<K, V> Node;
@@ -32,7 +33,7 @@ struct _HashTableIterator
 	HashTableBucket<K, V, _HashFun>* _ht;
 
 	typedef _HashTableIterator<K, V, Ref, Ptr, _HashFun> iterator;
-	//¹¹Ôìº¯Êı
+	//æ„é€ å‡½æ•°
 	_HashTableIterator(Node* pNode, HashTableBucket<K, V, _HashFun>* ht)
 		: _node(pNode)
 		, _ht(ht)
@@ -46,7 +47,7 @@ struct _HashTableIterator
 		return &(operator*());
 	}
 
-	iterator& operator++() //Ç°ÖÃ++
+	iterator& operator++() //å‰ç½®++
 	{
 		Node* pCur = _node;
 		_node = _node->_next;
@@ -60,7 +61,7 @@ struct _HashTableIterator
 		}
 		return *this;
 	}
-	iterator operator++(int) //ºóÖÃ++
+	iterator operator++(int) //åç½®++
 	{
 		iterator temp = *this;
 		++(*this);
@@ -133,7 +134,7 @@ public:
 		{
 			if (pCur->_kv.first == key)
 			{
-				if (pCur == _HashTable[index]) //É¾³ıµãÎªÍ·
+				if (pCur == _HashTable[index]) //åˆ é™¤ç‚¹ä¸ºå¤´
 				{
 					_HashTable[index] = prev->_next;
 				}
@@ -152,7 +153,7 @@ public:
 	}
 	void Clear()
 	{
-		for (size_t idx = 0; idx < _HashTable.size(); ++idx) //vectorµÄsize == capacity
+		for (size_t idx = 0; idx < _HashTable.size(); ++idx) //vectorçš„size == capacity
 		{
 			while (_HashTable[idx])
 			{
@@ -167,7 +168,7 @@ public:
 	{
 		Clear();
 	}
-	//[]²Ù×÷·û ·µ»Ø¼üÖµ¶Ô
+	//[]æ“ä½œç¬¦ è¿”å›é”®å€¼å¯¹
 	V& operator[](const K& key)
 	{
 		size_t idx = HashFun(key);
@@ -178,7 +179,7 @@ public:
 				return pCur->_kv.second;
 			pCur = pCur->_next;
 		}
-		//Ìø³öÑ­»· ±íÊ¾Ã»ÕÒµ½£¬¿ÉÒÔÅ×³öÒì³££¬
+		//è·³å‡ºå¾ªç¯ è¡¨ç¤ºæ²¡æ‰¾åˆ°ï¼Œå¯ä»¥æŠ›å‡ºå¼‚å¸¸ï¼Œ
 		throw::exception("ket not find");
 	}
 	Iterator Begin()
@@ -202,7 +203,7 @@ private:
 	}
 	void CheckCapacity()
 	{
-		if (_size == _HashTable.capacity()) //µ±²åÈëµÄÔªËØµÈÓÚvectorµÄÈİÁ¿,
+		if (_size == _HashTable.capacity()) //å½“æ’å…¥çš„å…ƒç´ ç­‰äºvectorçš„å®¹é‡,
 		{
 			HashTableBucket<K, V> temp(GetNextPrim(_size));
 			for (size_t idx = 0; idx < _HashTable.size(); ++idx)
@@ -213,9 +214,9 @@ private:
 				{
 					pPre = pCur;
 					pCur = pCur->_next;
-					//¶¨Î»ĞÂµÄtempµÄÍ°
+					//å®šä½æ–°çš„tempçš„æ¡¶
 					size_t hashIdx = temp.HashFun(pPre->_kv.first);
-					//Á´½Óµ½temp._hashTableÉÏ
+					//é“¾æ¥åˆ°temp._hashTableä¸Š
 					pPre->_next = temp._HashTable[hashIdx];
 					temp._HashTable[hashIdx] = pPre;
 					temp._size++;
@@ -238,11 +239,11 @@ void TestIterator()
 {
 
 	HashTableBucket<string, string> ht;
-	ht.Insert(make_pair("1","Ñî¹ı"));
-	ht.Insert(make_pair("2","Ğ¡ÁúÅ®"));
-	ht.Insert(make_pair("3","¾¸¸ç¸ç"));
-	ht.Insert(make_pair("4","ÈØ¶ù"));
-	ht.Insert(make_pair("5","¶«Ğ°"));
+	ht.Insert(make_pair("1","æ¨è¿‡"));
+	ht.Insert(make_pair("2","å°é¾™å¥³"));
+	ht.Insert(make_pair("3","é–å“¥å“¥"));
+	ht.Insert(make_pair("4","è“‰å„¿"));
+	ht.Insert(make_pair("5","ä¸œé‚ª"));
 	cout<<ht["1"]<<endl;
 	HashTableBucket<string, string>::Iterator it = ht.Begin();
 
