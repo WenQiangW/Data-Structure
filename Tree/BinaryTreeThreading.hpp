@@ -3,6 +3,7 @@
 #include<iostream>
 using namespace std;
 
+
 enum Info
 {
 	LINK,
@@ -41,7 +42,7 @@ public:
 		size_t index = 0;
 		_CreatBinaryTree(_pRoot, array, size, index);
 	}
-	//Ç°ĞòÏßË÷»¯
+	//å‰åºçº¿ç´¢åŒ–
 	void PreThread()
 	{
 		BinaryTreeNodeThd<T>* prev = NULL;
@@ -51,7 +52,7 @@ public:
 	{
 		_PreOrder(_pRoot);
 	}
-	//ÖĞĞòÏßË÷»¯
+	//ä¸­åºçº¿ç´¢åŒ–
 	void InThread()
 	{
 		BinaryTreeNodeThd<T>* prev = NULL;
@@ -62,7 +63,7 @@ public:
 		_InOrder(_pRoot);
 	}
 
-	//ºóĞò
+	//ååº
 	void PostThread()
 	{
 		BinaryTreeNodeThd<T>* prev = NULL;
@@ -96,13 +97,13 @@ private:
 	{
 		if (pRoot)
 		{
-			//ÏßË÷»¯µ±Ç°½ÚµãµÄ×óÖ¸ÕëÓò
+			//çº¿ç´¢åŒ–å½“å‰èŠ‚ç‚¹çš„å·¦æŒ‡é’ˆåŸŸ
 			if (NULL == pRoot->_pLeft)
 			{
 				pRoot->_pLeft = prev;
 				pRoot->_LeftThread = THREAD;
 			}
-			//ÏßË÷»¯µ±Ç°½ÚµãµÄÇ°¼Ì½ÚµãµÄÓÒÖ¸ÕëÓò
+			//çº¿ç´¢åŒ–å½“å‰èŠ‚ç‚¹çš„å‰ç»§èŠ‚ç‚¹çš„å³æŒ‡é’ˆåŸŸ
 			if (prev && NULL == prev->_pRight)
 			{
 				prev->_pRight = pRoot;
@@ -116,30 +117,30 @@ private:
 		}
 
 	}
-	void _PreOrder(BinaryTreeNodeThd<T>* pRoot) //Ç°Ğò±éÀú 0136425
+	void _PreOrder(BinaryTreeNodeThd<T>* pRoot) //å‰åºéå† 0136425
 	{
 		BinaryTreeNodeThd<T>* pCur = pRoot;
 
-		while (pCur) //Íâ²ãÑ­»·
+		while (pCur) //å¤–å±‚å¾ªç¯
 		{
-			// ÕÒµ½×î×ó±ßµÄ½Úµã
+			// æ‰¾åˆ°æœ€å·¦è¾¹çš„èŠ‚ç‚¹
 			while (LINK == pCur->_LeftThread)
 			{
 				cout << pCur->_data << " ";
 				pCur = pCur->_pLeft;
 			}
-			//´ËÊ±pCurÎª×î×ó±ßµÄ½Úµã»¹Ã»ÓĞ·ÃÎÊ
+			//æ­¤æ—¶pCurä¸ºæœ€å·¦è¾¹çš„èŠ‚ç‚¹è¿˜æ²¡æœ‰è®¿é—®
 			cout << pCur->_data << " ";
 
-			//´¦ÀíÓÒº¢×Ó
+			//å¤„ç†å³å­©å­
 			pCur = pCur->_pRight;
 			/*
-			while (THREAD == pCur->_RightThread) //´¦Àí3µÄÓÒ×ÓÊ÷
+			while (THREAD == pCur->_RightThread) //å¤„ç†3çš„å³å­æ ‘
 			{
 				pCur = pCur->_pRight;
 				cout << pCur->_data << " ";
 			}
-			if (LINK == pCur->_LeftThread)   //´¦Àí4µÄ×ó×ÓÊ÷
+			if (LINK == pCur->_LeftThread)   //å¤„ç†4çš„å·¦å­æ ‘
 			{
 				cout << pCur->_data << " ";
 				pCur = pCur->_pLeft;
@@ -180,21 +181,21 @@ private:
 		BinaryTreeNodeThd<T>* pCur = pRoot;
 		while (pCur)
 		{
-			//ÕÒµ½×î×ó±ßµÄ½Úµã
+			//æ‰¾åˆ°æœ€å·¦è¾¹çš„èŠ‚ç‚¹
 			while (LINK == pCur->_LeftThread)
 			{
 				pCur = pCur->_pLeft;
 			}
-			//·ÃÎÊµ±Ç°½Úµã
+			//è®¿é—®å½“å‰èŠ‚ç‚¹
 			cout << pCur->_data << " ";
 
-			//·ÃÎÊµ±Ç°½ÚµãµÄºó¼Ì
-			while (pCur && pCur->_RightThread == THREAD) //×¢Òâ×óµ¥Ö§ pCurÎª¿Õ
+			//è®¿é—®å½“å‰èŠ‚ç‚¹çš„åç»§
+			while (pCur && pCur->_RightThread == THREAD) //æ³¨æ„å·¦å•æ”¯ pCurä¸ºç©º
 			{
 				pCur = pCur->_pRight;
 				cout << pCur->_data << " ";
 			}
-			//Ã»ÓĞºó¼Ì£¬ÓĞÓÒ×ÓÊ÷
+			//æ²¡æœ‰åç»§ï¼Œæœ‰å³å­æ ‘
 			if (pCur)
 			{
 				pCur = pCur->_pRight;
@@ -224,49 +225,49 @@ private:
 		}
 	}
 	void _PostOrder(BinaryTreeNodeThd<T>* pRoot) //6341520
-		/* Ë¼Â·£º1£ºÏÈÕÒµ½×î×ó±ßµÄ½Úµã
-				 2£ºÈ»ºó±éÀú½ÚµãµÄºó¼Ì(×¢Òâ×óµ¥Ö§µÄÇé¿ö)
-				 3£ºµ±±éÀúµ½Ã»ÓĞºó¼ÌÊ± ÅĞ¶ÏÊÇ·ñµ½´ï¸ù½Úµã£ºµ½´ï¸ù½Úµã£¨Èç¹û¸ù½ÚµãÃ»ÓĞÓÒ×ÓÊ÷£¬·ÃÎÊ¸ù½Úµã return£»£©
-				 4£º				   Ã»ÓĞµ½´ï¸ù½Úµã£ºÕÒµ±Ç°½ÚµãµÄË«Ç×½Úµã£¬
-				 5£ºÒ»Ö±ÕÒµ½¸ù½Úµã£¬¼ÌĞøÅĞ¶Ï¸ù½ÚµãÊÇ·ñÓĞÓÒ×ÓÊ÷£¬
+		/* æ€è·¯ï¼š1ï¼šå…ˆæ‰¾åˆ°æœ€å·¦è¾¹çš„èŠ‚ç‚¹
+				 2ï¼šç„¶åéå†èŠ‚ç‚¹çš„åç»§(æ³¨æ„å·¦å•æ”¯çš„æƒ…å†µ)
+				 3ï¼šå½“éå†åˆ°æ²¡æœ‰åç»§æ—¶ åˆ¤æ–­æ˜¯å¦åˆ°è¾¾æ ¹èŠ‚ç‚¹ï¼šåˆ°è¾¾æ ¹èŠ‚ç‚¹ï¼ˆå¦‚æœæ ¹èŠ‚ç‚¹æ²¡æœ‰å³å­æ ‘ï¼Œè®¿é—®æ ¹èŠ‚ç‚¹ returnï¼›ï¼‰
+				 4ï¼š				   æ²¡æœ‰åˆ°è¾¾æ ¹èŠ‚ç‚¹ï¼šæ‰¾å½“å‰èŠ‚ç‚¹çš„åŒäº²èŠ‚ç‚¹ï¼Œ
+				 5ï¼šä¸€ç›´æ‰¾åˆ°æ ¹èŠ‚ç‚¹ï¼Œç»§ç»­åˆ¤æ–­æ ¹èŠ‚ç‚¹æ˜¯å¦æœ‰å³å­æ ‘ï¼Œ
 		*/
 	{
 		BinaryTreeNodeThd<T>* pCur = pRoot;
 		BinaryTreeNodeThd<T>* prev = NULL;
 		while (pCur)
 		{
-			//ÕÒ×î×ó±ßµÄ½Úµã
-			while (pCur->_LeftThread == LINK && pCur->_pLeft != prev) //·ÀÖ¹ÏİÈëËÀÑ­»·  
+			//æ‰¾æœ€å·¦è¾¹çš„èŠ‚ç‚¹
+			while (pCur->_LeftThread == LINK && pCur->_pLeft != prev) //é˜²æ­¢é™·å…¥æ­»å¾ªç¯  
 			{
 				pCur = pCur->_pLeft;
-			} //Ìø³öÑ­»·µÄÌõ¼ş£ºpCurÎª×î×ó±ßµÄ½Úµã
+			} //è·³å‡ºå¾ªç¯çš„æ¡ä»¶ï¼špCurä¸ºæœ€å·¦è¾¹çš„èŠ‚ç‚¹
 			
-			//·ÃÎÊ½ÚµãµÄºó¼Ì
-			while (pCur && THREAD == pCur->_RightThread) // ×óµ¥Ö§µÄÇé¿ö£ºËùÒÔÅĞ¶ÏpCurÊÇ·ñÎª¿Õ
+			//è®¿é—®èŠ‚ç‚¹çš„åç»§
+			while (pCur && THREAD == pCur->_RightThread) // å·¦å•æ”¯çš„æƒ…å†µï¼šæ‰€ä»¥åˆ¤æ–­pCuræ˜¯å¦ä¸ºç©º
 			{
 				cout << pCur->_data << " ";
-				prev = pCur; //perv¼ÇÂ¼ÒÑ¾­·ÃÎÊ¹ıµÄ½Úµã
+				prev = pCur; //pervè®°å½•å·²ç»è®¿é—®è¿‡çš„èŠ‚ç‚¹
 				pCur = pCur->_pRight;
-			}//Ìø³öÑ­»·µÄÌõ¼ş£ºpCurÎª¿Õ£¨¼´×óµ¥Ö§Çé¿ö£©»òÕß½ÚµãÓĞÓÒ×ÓÊ÷»òÕß½ÚµãÎª¸ù½Úµã
+			}//è·³å‡ºå¾ªç¯çš„æ¡ä»¶ï¼špCurä¸ºç©ºï¼ˆå³å·¦å•æ”¯æƒ…å†µï¼‰æˆ–è€…èŠ‚ç‚¹æœ‰å³å­æ ‘æˆ–è€…èŠ‚ç‚¹ä¸ºæ ¹èŠ‚ç‚¹
 
-			//Ìø³öÑ­»·£¬ÅĞ¶ÏÊÇ·ñÎª¸ù½Úµã
+			//è·³å‡ºå¾ªç¯ï¼Œåˆ¤æ–­æ˜¯å¦ä¸ºæ ¹èŠ‚ç‚¹
 			if (pCur == pRoot && pCur->_pRight == prev)
 			{
 				cout << pCur->_data << " ";
 				return;
 			}
-			//²»ÊÇ¸ù½Úµã£¬·ÃÎÊµ±Ç°½ÚµãµÄË«Ç×½Úµã
-			while (pCur && pCur->_pRight == prev) // ×¢Òâ ÓÒµ¥Ö§Çé¿ö´ËÊ±pCur == pRoot
+			//ä¸æ˜¯æ ¹èŠ‚ç‚¹ï¼Œè®¿é—®å½“å‰èŠ‚ç‚¹çš„åŒäº²èŠ‚ç‚¹
+			while (pCur && pCur->_pRight == prev) // æ³¨æ„ å³å•æ”¯æƒ…å†µæ­¤æ—¶pCur == pRoot
 			{
 				cout << pCur->_data << " ";
 				prev = pCur;
 				pCur = pCur->_pParent;
 			}
 
-			// ÅĞ¶Ï¸ù½ÚµãÊÇ·ñÓĞÓÒ×ÓÊ÷
+			// åˆ¤æ–­æ ¹èŠ‚ç‚¹æ˜¯å¦æœ‰å³å­æ ‘
 			if (pCur && pCur->_RightThread == LINK )
 			{
-				if (pCur->_pRight == NULL) //½â¾ö¸ù½áµãÃ»ÓĞÓÒº¢×Ó£¬Ã»ÓĞÏßË÷»¯ÎªLINK£¬ÇÒÎªNULL
+				if (pCur->_pRight == NULL) //è§£å†³æ ¹ç»“ç‚¹æ²¡æœ‰å³å­©å­ï¼Œæ²¡æœ‰çº¿ç´¢åŒ–ä¸ºLINKï¼Œä¸”ä¸ºNULL
 					cout << pCur->_data << " ";
 				pCur = pCur->_pRight;
 			}
@@ -294,7 +295,7 @@ void FunTest1()
 	bt.PostOrder();
 }
 
-void FunTest2() //ÅĞ¶ÏµÚÒ»¸öÑ­»·µÄ·ÀÖ¹ÏİÈëËÀÑ­»·µÄ
+void FunTest2() //åˆ¤æ–­ç¬¬ä¸€ä¸ªå¾ªç¯çš„é˜²æ­¢é™·å…¥æ­»å¾ªç¯çš„
 {
 	char* pTreeInfo = "1245##6#7###3";
 	BinaryTreeThd<char> bt(pTreeInfo, strlen(pTreeInfo));
@@ -302,7 +303,7 @@ void FunTest2() //ÅĞ¶ÏµÚÒ»¸öÑ­»·µÄ·ÀÖ¹ÏİÈëËÀÑ­»·µÄ
 	bt.PostOrder();
 }
 
-void FunTest3() // ÓÒµ¥Ö§ £ºÅĞ¶ÏÊÇ·ñÎª¸ùµÄÇé¿öÏÂ¼ÓµÄÌõ¼ş£º pCur->_pRight == prev
+void FunTest3() // å³å•æ”¯ ï¼šåˆ¤æ–­æ˜¯å¦ä¸ºæ ¹çš„æƒ…å†µä¸‹åŠ çš„æ¡ä»¶ï¼š pCur->_pRight == prev
 {
 	char* pTreeInfo = "1#2#3#4";
 	BinaryTreeThd<char> bt(pTreeInfo, strlen(pTreeInfo));
@@ -310,7 +311,7 @@ void FunTest3() // ÓÒµ¥Ö§ £ºÅĞ¶ÏÊÇ·ñÎª¸ùµÄÇé¿öÏÂ¼ÓµÄÌõ¼ş£º pCur->_pRight == prev
 	bt.PostOrder();
 }
 
-void FunTest4() //²âÊÔ×óµ¥Ö§
+void FunTest4() //æµ‹è¯•å·¦å•æ”¯
 {
 	char* pTreeInfo = "1#2#3#4";
 	BinaryTreeThd<char> bt(pTreeInfo, strlen(pTreeInfo));
