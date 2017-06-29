@@ -1,6 +1,6 @@
 
 
-//¿ªÉ¢ÁĞ£¬¹şÏ£Í°
+//å¼€æ•£åˆ—ï¼Œå“ˆå¸Œæ¡¶
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
@@ -9,8 +9,9 @@
 #include"common.h"
 using namespace std;
 
+
 /*
-//Ã»ÓĞÊµÏÖstring
+//æ²¡æœ‰å®ç°string
 template<class K,class V>
 struct HashNode
 {
@@ -80,7 +81,7 @@ public:
 		{
 			if (key == pCur->_key)
 			{
-				if (pCur == _HashTable[index]) //É¾³ıµãÎªÍ·
+				if (pCur == _HashTable[index]) //åˆ é™¤ç‚¹ä¸ºå¤´
 				{
 					_HashTable[index] = prev->_next;
 				}
@@ -122,7 +123,7 @@ public:
 private:
 	void CheckCapacity()
 	{
-		if (_size == _HashTable.capacity()) //µ±²åÈëµÄÔªËØµÈÓÚvectorµÄÈİÁ¿,
+		if (_size == _HashTable.capacity()) //å½“æ’å…¥çš„å…ƒç´ ç­‰äºvectorçš„å®¹é‡,
 		{
 			HashTableBucket<K, V> temp(GetNextPrim(_size));
 			for (int idx = 0; idx < _HashTable.size(); ++idx)
@@ -133,9 +134,9 @@ private:
 				{
 					pPre = pCur;
 					pCur = pCur->_next;
-					//¶¨Î»ĞÂµÄtempµÄÍ°
+					//å®šä½æ–°çš„tempçš„æ¡¶
 					size_t hashIdx = temp.HashFun(pPre->_key);
-					//Á´½Óµ½temp._hashTableÉÏ
+					//é“¾æ¥åˆ°temp._hashTableä¸Š
 					pPre->_next = temp._HashTable[hashIdx];
 					temp._HashTable[hashIdx] = pPre;
 					temp._size++;
@@ -167,7 +168,7 @@ public:
 	}
 };
 
-//string×ª»¯ÎªÊı×Ö
+//stringè½¬åŒ–ä¸ºæ•°å­—
 static size_t BKDRHash(const char * str)
 {
 	unsigned int seed = 131; // 31 131 1313 13131 131313
@@ -191,7 +192,7 @@ public:
 };
 */
 
-//ÊµÏÖstring
+//å®ç°string
 template<class K, class V>
 struct HashNode
 {
@@ -261,7 +262,7 @@ public:
 		{
 			if (pCur->_kv.first == key)
 			{
-				if (pCur == _HashTable[index]) //É¾³ıµãÎªÍ·
+				if (pCur == _HashTable[index]) //åˆ é™¤ç‚¹ä¸ºå¤´
 				{
 					_HashTable[index] = prev->_next;
 				}
@@ -280,7 +281,7 @@ public:
 	}
 	void Clear()
 	{
-		for (size_t idx = 0; idx < _HashTable.size(); ++idx) //vectorµÄsize == capacity
+		for (size_t idx = 0; idx < _HashTable.size(); ++idx) //vectorçš„size == capacity
 		{
 			while (_HashTable[idx])
 			{
@@ -295,7 +296,7 @@ public:
 	{
 		Clear();
 	}
-	//[]²Ù×÷·û ·µ»Ø¼üÖµ¶Ô
+	//[]æ“ä½œç¬¦ è¿”å›é”®å€¼å¯¹
 	V& operator[](const K& key)
 	{
 		size_t idx = HashFun(key);
@@ -306,13 +307,13 @@ public:
 				return pCur->_kv.second;
 			pCur = pCur->_next;
 		}
-		//Ìø³öÑ­»· ±íÊ¾Ã»ÕÒµ½£¬¿ÉÒÔÅ×³öÒì³££¬
+		//è·³å‡ºå¾ªç¯ è¡¨ç¤ºæ²¡æ‰¾åˆ°ï¼Œå¯ä»¥æŠ›å‡ºå¼‚å¸¸ï¼Œ
 		throw::exception("ket not find");
 	}
 private:
 	void CheckCapacity()
 	{
-		if (_size == _HashTable.capacity()) //µ±²åÈëµÄÔªËØµÈÓÚvectorµÄÈİÁ¿,
+		if (_size == _HashTable.capacity()) //å½“æ’å…¥çš„å…ƒç´ ç­‰äºvectorçš„å®¹é‡,
 		{
 			HashTableBucket<K, V> temp(GetNextPrim(_size));
 			for (size_t idx = 0; idx < _HashTable.size(); ++idx)
@@ -323,9 +324,9 @@ private:
 				{
 					pPre = pCur;
 					pCur = pCur->_next;
-					//¶¨Î»ĞÂµÄtempµÄÍ°
+					//å®šä½æ–°çš„tempçš„æ¡¶
 					size_t hashIdx = temp.HashFun(pPre->_kv.first);
-					//Á´½Óµ½temp._hashTableÉÏ
+					//é“¾æ¥åˆ°temp._hashTableä¸Š
 					pPre->_next = temp._HashTable[hashIdx];
 					temp._HashTable[hashIdx] = pPre;
 					temp._size++;
