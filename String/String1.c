@@ -1,3 +1,4 @@
+
 //普通版
 class String
 {
