@@ -5,7 +5,8 @@
 #include <vector>
 using namespace std;
 
-//ÁÚ½Ó¾ØÕó
+
+//é‚»æ¥çŸ©é˜µ
 
 template<class V, class W>
 class GraphMatrix
@@ -22,7 +23,7 @@ public:
 			_edge[i].resize(size);
 		}
 	}
-	int GetIndexOfVertex(const V& v)//·µ»Ø½ÚµãµÄÏÂ±ê
+	int GetIndexOfVertex(const V& v)//è¿”å›èŠ‚ç‚¹çš„ä¸‹æ ‡
 	{
 		for (size_t i = 0; i < _ver.size(); ++i)
 		{
@@ -36,11 +37,11 @@ public:
 	{
 		int row = GetIndexOfVertex(v1);
 		int col = GetIndexOfVertex(v2);
-		if (_IsDirected)//ÓĞÏòÍ¼
+		if (_IsDirected)//æœ‰å‘å›¾
 		{
 			_edge[row][col] = weight;
 		}
-		else//ÎŞÏòÍ¼
+		else//æ— å‘å›¾
 		{
 			_edge[row][col] = weight;
 			_edge[col][row] = weight;
@@ -59,9 +60,9 @@ public:
 		cout << endl;
 	}
 private:
-	vector<V> _ver;//´æ·Å½áµã ±ÈÈç char A B;
-	vector<vector<W> > _edge;//´æ·Å±ßµÄÈ¨Öµ
-	bool _IsDirected; //true ÎªÓĞÏòÍ¼
+	vector<V> _ver;//å­˜æ”¾ç»“ç‚¹ æ¯”å¦‚ char A B;
+	vector<vector<W> > _edge;//å­˜æ”¾è¾¹çš„æƒå€¼
+	bool _IsDirected; //true ä¸ºæœ‰å‘å›¾
 };
 
 
