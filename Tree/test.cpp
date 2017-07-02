@@ -1,9 +1,8 @@
 #include"BinaryTree.hpp"
 #include"BinaryTreeThreading.hpp"
-#include"√Ê ‘Ã‚.h"
+#include"√É√¶√ä√î√å√¢.h"
 #include<iostream>
 using namespace std;
-
 
 
 int main()
